@@ -38,7 +38,7 @@ export const LoopiChat = ({ onClose }: LoopiChatProps) => {
   const [inputValue, setInputValue] = useState("");
   const [currentMood, setCurrentMood] = useState<LoopiMood>("calm");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputValue.trim()) return;
 
     const userMessage: Message = {
@@ -48,30 +48,114 @@ export const LoopiChat = ({ onClose }: LoopiChatProps) => {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const newMessages = [...messages, userMessage];
+    setMessages(newMessages);
     setInputValue("");
 
-    // Simulated response (aquí se integrará con Lovable AI)
-    setTimeout(() => {
-      const responses = [
-        { text: "Genial, ¡vamos a trabajar en eso juntos! 💪", mood: "excited" as LoopiMood },
-        { text: "Entiendo cómo te sientes. Estoy aquí para ayudarte.", mood: "calm" as LoopiMood },
-        { text: "¡Excelente actitud! Eso es lo que me gusta escuchar 🎉", mood: "happy" as LoopiMood },
-      ];
-      
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-      setCurrentMood(randomResponse.mood);
-      
-      const loopiMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        text: randomResponse.text,
-        sender: "loopi",
-        mood: randomResponse.mood,
-        timestamp: new Date(),
-      };
+    // Placeholder para respuesta mientras llega el stream
+    const tempId = (Date.now() + 1).toString();
+    setMessages((prev) => [...prev, {
+      id: tempId,
+      text: "",
+      sender: "loopi",
+      mood: "calm",
+      timestamp: new Date(),
+    }]);
 
-      setMessages((prev) => [...prev, loopiMessage]);
-    }, 1000);
+    try {
+      const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/loopi-chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY}`,
+        },
+        body: JSON.stringify({
+          messages: newMessages.map(m => ({
+            role: m.sender === "user" ? "user" : "assistant",
+            content: m.text
+          }))
+        }),
+      });
+
+      if (!response.ok || !response.body) {
+        throw new Error("Error en la respuesta");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let textBuffer = "";
+      let fullResponse = "";
+      let streamDone = false;
+
+      while (!streamDone) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        textBuffer += decoder.decode(value, { stream: true });
+
+        let newlineIndex: number;
+        while ((newlineIndex = textBuffer.indexOf("\n")) !== -1) {
+          let line = textBuffer.slice(0, newlineIndex);
+          textBuffer = textBuffer.slice(newlineIndex + 1);
+
+          if (line.endsWith("\r")) line = line.slice(0, -1);
+          if (line.startsWith(":") || line.trim() === "") continue;
+          if (!line.startsWith("data: ")) continue;
+
+          const jsonStr = line.slice(6).trim();
+          if (jsonStr === "[DONE]") {
+            streamDone = true;
+            break;
+          }
+
+          try {
+            const parsed = JSON.parse(jsonStr);
+            const content = parsed.choices?.[0]?.delta?.content as string | undefined;
+            if (content) {
+              fullResponse += content;
+              setMessages((prev) => 
+                prev.map((m) => 
+                  m.id === tempId 
+                    ? { ...m, text: fullResponse, mood: "happy" as LoopiMood }
+                    : m
+                )
+              );
+            }
+          } catch {
+            textBuffer = line + "\n" + textBuffer;
+            break;
+          }
+        }
+      }
+
+      // Determinar mood basado en la respuesta
+      const mood: LoopiMood = fullResponse.includes("!") || fullResponse.includes("🎉") 
+        ? "excited" 
+        : fullResponse.includes("?") 
+          ? "calm" 
+          : "happy";
+      
+      setCurrentMood(mood);
+      setMessages((prev) => 
+        prev.map((m) => 
+          m.id === tempId 
+            ? { ...m, mood }
+            : m
+        )
+      );
+
+    } catch (error) {
+      console.error("Error:", error);
+      setMessages((prev) => 
+        prev.filter((m) => m.id !== tempId)
+      );
+      setMessages((prev) => [...prev, {
+        id: Date.now().toString(),
+        text: "Lo siento, tuve un problema al responder. ¿Puedes intentar de nuevo?",
+        sender: "loopi",
+        mood: "sad",
+        timestamp: new Date(),
+      }]);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {

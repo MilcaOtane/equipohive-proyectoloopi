@@ -66,7 +66,10 @@ const Index = () => {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Feature 1 */}
-          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5">
+          <Card 
+            className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer"
+            onClick={() => setShowChat(true)}
+          >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-loopi flex items-center justify-center">
                 <Brain className="h-6 w-6 text-white" />
@@ -79,7 +82,10 @@ const Index = () => {
           </Card>
 
           {/* Feature 2 */}
-          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-secondary/20 bg-gradient-to-br from-card to-secondary/5">
+          <Card 
+            className="p-6 hover:shadow-loopi transition-all duration-300 border-secondary/20 bg-gradient-to-br from-card to-secondary/5 cursor-pointer"
+            onClick={() => window.location.href = "/focus-monitor"}
+          >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-secondary to-primary flex items-center justify-center">
                 <Target className="h-6 w-6 text-white" />
@@ -92,7 +98,10 @@ const Index = () => {
           </Card>
 
           {/* Feature 3 */}
-          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-accent/20 bg-gradient-to-br from-card to-accent/5">
+          <Card 
+            className="p-6 hover:shadow-loopi transition-all duration-300 border-accent/20 bg-gradient-to-br from-card to-accent/5 cursor-pointer"
+            onClick={() => window.location.href = "/challenges"}
+          >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-accent to-primary flex items-center justify-center">
                 <Trophy className="h-6 w-6 text-white" />
@@ -105,7 +114,10 @@ const Index = () => {
           </Card>
 
           {/* Feature 4 */}
-          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5">
+          <Card 
+            className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer"
+            onClick={() => window.location.href = "/oasis-calm"}
+          >
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-calm flex items-center justify-center">
                 <Sparkles className="h-6 w-6 text-white" />
