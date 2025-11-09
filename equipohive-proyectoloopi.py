@@ -1,80 +1,138 @@
 import streamlit as st
 from PIL import Image
-import random
 
-# --- Configuración de la app ---
-st.set_page_config(page_title="Loopi Asistente", page_icon="💫", layout="wide")
+# ----------------- CONFIGURACIÓN BÁSICA -----------------
+st.set_page_config(
+    page_title="Loopi - Coach digital empático",
+    page_icon="💫",
+    layout="wide"
+)
 
-# --- Cargar imágenes de emociones ---
-emociones = {
-    "feliz": Image.open("2 muy feliz amigable.png"),
-    "tranquilo": Image.open("3 feliz tranquilo.png"),
-    "calmado": Image.open("1 loopi sonrie ojo cerrado.png"),
-    "animado": Image.open("2 manos arriba ojos abierto.png"),
-    "molesto": Image.open("4 molesto manos arriba.png"),
-    "triste": Image.open("5 triste.png")
-}
-
-# --- Encabezado ---
-st.title("💫 Loopi Asistente Virtual")
-st.subheader("Cuida tu mente, protege tu mundo 🌍")
-
-# --- Menú principal ---
-menu = st.sidebar.radio("Selecciona una función:", 
-                        ["Asistente Inteligente", "Monitor de Enfoque", "Loop Retos", "Loop Calm"])
-
-# --- Función 1: Asistente Inteligente ---
-if menu == "Asistente Inteligente":
-    st.header("💬 Asistente Inteligente")
-    st.write("Hola, soy **Loopi**, tu acompañante digital. Cuéntame cómo te sientes hoy 💙")
-
-    estado = st.selectbox("¿Cómo te sientes?", ["Feliz", "Tranquilo", "Cansado", "Molesto", "Triste"])
-    
-    respuestas = {
-        "Feliz": "¡Qué alegría verte tan bien! 🌈 ¿Quieres compartir tu energía con un reto Loop?",
-        "Tranquilo": "Me encanta verte en calma 🌿. Recuerda que cuidar tu mente es tan importante como respirar.",
-        "Cansado": "Parece que necesitas una pausa 💤. ¿Qué tal si hacemos un breve ejercicio de respiración?",
-        "Molesto": "A veces es normal sentirse así 😤. Vamos a relajarnos juntos un momento.",
-        "Triste": "Estoy aquí contigo 💫. ¿Quieres que te recomiende algo para sentirte mejor?"
+# ----------------- ESTILOS (CSS) -----------------
+st.markdown("""
+<style>
+    .stApp {
+        background: radial-gradient(circle at top, #f3e9ff 0, #f6f9ff 35%, #ffffff 80%);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
+    .hero {
+        text-align: center;
+        padding: 4rem 1rem 3rem;
+    }
+    .loopi-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 999px;
+        background: radial-gradient(circle at top, #7C5CFF, #2DC6FF);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 18px 45px rgba(80,112,255,0.25);
+    }
+    .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.25rem;
+        background: linear-gradient(90deg,#2DC6FF,#7C5CFF);
+        -webkit-background-clip: text;
+        color: transparent;
+    }
+    .hero-subtitle {
+        font-size: 1.1rem;
+        color: #6a6f82;
+        margin-bottom: 0.75rem;
+    }
+    .hero-text {
+        max-width: 560px;
+        margin: 0 auto;
+        color: #7b8195;
+        font-size: 0.96rem;
+    }
+    /* Botón flotante de chat */
+    .floating-chat-button {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg,#2DC6FF,#7C5CFF);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 25px rgba(80,112,255,0.35);
+        cursor: pointer;
+        z-index: 9999;
+    }
+    .floating-chat-button span {
+        font-size: 26px;
+        color: white;
+    }
+</style>
+""", unsafe_allow_html=True)
 
-    st.image(emociones.get(estado.lower(), emociones["feliz"]), width=250)
-    st.info(respuestas[estado])
+# ----------------- HERO / PANTALLA DE INICIO -----------------
+# Cambia el nombre del archivo por tu imagen real
+loopi_img = Image.open("2 muy feliz amigable.png")
 
-# --- Función 2: Monitor de Enfoque ---
-elif menu == "Monitor de Enfoque":
-    st.header("🎯 Monitor de Enfoque")
-    st.write("Mide tu nivel de concentración y descubre si necesitas una pausa.")
-    
-    focus = st.slider("Del 1 al 10, ¿qué tan enfocada te sientes?", 1, 10, 5)
-    
-    if focus <= 4:
-        st.warning("Parece que tu enfoque está bajo 😴. ¡Es momento de un descanso con Loop Calm!")
-    elif 5 <= focus <= 7:
-        st.info("Estás en un buen punto 👌. Una pequeña pausa te ayudará a mantener la energía.")
-    else:
-        st.success("¡Excelente concentración! 🚀 Sigue así, pero recuerda tomar pausas cada cierto tiempo.")
+st.markdown('<div class="hero">', unsafe_allow_html=True)
 
-# --- Función 3: Loop Retos ---
-elif menu == "Loop Retos":
-    st.header("🌟 Loop Retos")
-    retos = [
-        "Desconéctate de tu celular por 15 minutos y sal a respirar aire fresco 🍃",
-        "Envía un mensaje positivo a alguien que quieras 💌",
-        "Haz una pausa y estira tus brazos y cuello 🧘",
-        "Escribe 3 cosas por las que te sientas agradecida hoy 🌞"
+st.markdown('<div class="loopi-avatar">', unsafe_allow_html=True)
+st.image(loopi_img, width=110)
+st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown('<div class="hero-title">Hola, soy Loopi 👋</div>', unsafe_allow_html=True)
+st.markdown('<div class="hero-subtitle">Tu coach digital empático</div>', unsafe_allow_html=True)
+
+st.markdown(
+    '<p class="hero-text">'
+    'No soy un bloqueador más. Soy tu compañero inteligente que te ayuda a mantener el enfoque, '
+    'mejorar tus hábitos digitales y encontrar el equilibrio perfecto entre productividad y bienestar.'
+    '</p>',
+    unsafe_allow_html=True
+)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+st.markdown("")
+
+# ----------------- SECCIÓN DE CHAT -----------------
+st.markdown("## 💬 Chatea con Loopi")
+
+if "messages" not in st.session_state:
+    st.session_state.messages = [
+        {"role": "assistant",
+         "content": "Hola, soy Loopi 😊 ¿En qué te ayudo hoy?"}
     ]
-    st.success(f"Tu reto de hoy es: **{random.choice(retos)}**")
 
-# --- Función 4: Loop Calm ---
-elif menu == "Loop Calm":
-    st.header("🌊 Loop Calm")
-    st.write("Tómate un momento para respirar y recargar energía 💙")
-    st.audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_639f285b8f.mp3?filename=relaxing-nature.mp3")
-    st.image(emociones["calmado"], width=250)
-    st.markdown("**Inhala 4s — Mantén 4s — Exhala 4s — Pausa 4s** 🕊️")
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.write(msg["content"])
 
-# --- Footer ---
-st.markdown("---")
-st.caption("Desarrollado por Equipo Hive · 28h UPC · 2025 💫")
+user_msg = st.chat_input("Escribe aquí para hablar con Loopi...")
 
+if user_msg:
+    # mensaje del usuario
+    st.session_state.messages.append({"role": "user", "content": user_msg})
+
+    # respuesta MUY simple por ahora (luego la hacemos más inteligente)
+    text = user_msg.lower()
+    if any(pal in text for pal in ["estres", "estresada", "estresado", "ansiosa", "ansioso", "agobiada", "agobiado"]):
+        reply = ("Entiendo que te sientes cargada 💜. "
+                 "Probemos algo rápido: inhala 4 segundos, mantén 4, exhala 4 y descansa 4. "
+                 "¿Quieres que te recomiende un mini reto para cuidarte ahora?")
+    else:
+        reply = ("Gracias por contarme eso 💫. Estoy aquí para acompañarte mientras cuidas tu mundo digital. "
+                 "Pronto podré personalizar aún más mis respuestas para ti.")
+
+    st.session_state.messages.append({"role": "assistant", "content": reply})
+    st.rerun()
+
+# ----------------- BOTÓN FLOTANTE QUE SIGUE EL SCROLL -----------------
+st.markdown("""
+<div class="floating-chat-button"
+     onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'});">
+  <span>💬</span>
+</div>
+""", unsafe_allow_html=True)
