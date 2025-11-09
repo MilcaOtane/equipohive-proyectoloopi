@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Brain, Target, Trophy, Sparkles } from "lucide-react";
+import { Brain, Target, Trophy, Sparkles, MessageCircle } from "lucide-react";
 import loopiAvatar from "@/assets/loopi-avatar.png";
+import { LoopiChat } from "@/components/LoopiChat";
 
 const Index = () => {
+  const [showChat, setShowChat] = useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/10">
       {/* Hero Section */}
@@ -37,10 +41,11 @@ const Index = () => {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button 
               size="lg" 
+              onClick={() => setShowChat(true)}
               className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8"
             >
-              <Sparkles className="mr-2 h-5 w-5" />
-              Comenzar gratis
+              <MessageCircle className="mr-2 h-5 w-5" />
+              Habla con Loopi
             </Button>
             <Button 
               size="lg" 
@@ -178,6 +183,20 @@ const Index = () => {
           </p>
         </div>
       </section>
+
+      {/* Floating Chat Button */}
+      {!showChat && (
+        <Button
+          onClick={() => setShowChat(true)}
+          size="lg"
+          className="fixed bottom-8 right-8 rounded-full w-16 h-16 bg-gradient-loopi hover:shadow-loopi transition-all duration-300 z-50"
+        >
+          <MessageCircle className="h-6 w-6" />
+        </Button>
+      )}
+
+      {/* Chat Interface */}
+      {showChat && <LoopiChat onClose={() => setShowChat(false)} />}
     </div>
   );
 };
