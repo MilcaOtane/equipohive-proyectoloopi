@@ -21,9 +21,7 @@ const Index = () => {
             <h1 className="text-5xl md:text-7xl font-bold bg-gradient-loopi bg-clip-text text-transparent">
               Hola, soy Loopi 👋
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground">
-              Tu coach digital empático
-            </p>
+            
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               No soy un bloqueador más. Soy tu compañero inteligente que te ayuda a mantener el enfoque, 
               mejorar tus hábitos digitales y encontrar el equilibrio perfecto entre productividad y bienestar.
@@ -32,8 +30,7 @@ const Index = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button size="lg" onClick={() => setShowChat(true)} className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8">
-              <MessageCircle className="mr-2 h-5 w-5" />
+            <Button size="lg" onClick={() => setShowChat(true)} className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8">Haz loop con tu bienestar<MessageCircle className="mr-2 h-5 w-5" />
               Habla con Loopi
             </Button>
             
@@ -93,7 +90,7 @@ const Index = () => {
               <div className="w-12 h-12 rounded-full bg-gradient-calm flex items-center justify-center">
                 <Sparkles className="h-6 w-6 text-white" />
               </div>
-              <h3 className="text-xl font-bold">Oasis Calm</h3>
+              <h3 className="text-xl font-bold">Loop calm</h3>
               <p className="text-muted-foreground">
                 Espacio de relajación con música ambiental y visuales calmantes para resetear tu mente cuando lo necesites.
               </p>
