@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Brain, Target, Trophy, Sparkles, MessageCircle } from "lucide-react";
-import loopiAvatar from "@/assets/loopi-avatar.png";
+import loopiAvatar from "@/assets/loopi-happy.png";
 import { LoopiChat } from "@/components/LoopiChat";
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
