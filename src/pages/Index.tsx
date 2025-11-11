@@ -30,10 +30,9 @@ const Index = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button size="lg" onClick={() => setShowChat(true)} className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8">Haz loop con tu bienestar<MessageCircle className="mr-2 h-5 w-5" />
-              Habla con Loopi
+            <Button size="lg" onClick={() => setShowChat(true)} className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8">
+              Haz loop con tu bienestar
             </Button>
-            
           </div>
         </div>
       </section>
