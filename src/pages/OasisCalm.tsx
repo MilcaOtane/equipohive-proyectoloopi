@@ -4,21 +4,24 @@ import { Button } from "@/components/ui/button";
 import { LoopiAvatar } from "@/components/LoopiAvatar";
 import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function OasisCalm() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
   const [isPlaying, setIsPlaying] = useState(false);
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutos por defecto
   const [isMuted, setIsMuted] = useState(false);
   const [currentPhrase, setCurrentPhrase] = useState(0);
 
   const mindfulnessPhrases = [
-    "Respira profundo. Estás haciendo un gran trabajo.",
-    "Este momento es para ti. Permítete descansar.",
-    "No hay prisa. Tu mente merece este espacio.",
-    "Cada respiración te acerca al equilibrio.",
-    "Eres capaz de lograr lo que te propones.",
-    "Está bien tomar un break. Volverás más fuerte.",
+    t("oasis.phrase1"),
+    t("oasis.phrase2"),
+    t("oasis.phrase3"),
+    t("oasis.phrase4"),
+    t("oasis.phrase5"),
+    t("oasis.phrase6"),
   ];
 
   useEffect(() => {
@@ -44,7 +47,7 @@ export default function OasisCalm() {
     }, 15000);
 
     return () => clearInterval(phraseTimer);
-  }, []);
+  }, [mindfulnessPhrases.length]);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -68,6 +71,7 @@ export default function OasisCalm() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/20 via-accent/20 to-secondary/20 relative overflow-hidden">
+      <LanguageSelector />
       {/* Fondo animado suave */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" 
@@ -85,7 +89,7 @@ export default function OasisCalm() {
           className="mb-8 text-foreground/70 hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Volver
+          {t("focus.back")}
         </Button>
 
         <div className="flex flex-col items-center justify-center min-h-[80vh] space-y-8">
@@ -202,19 +206,19 @@ export default function OasisCalm() {
               onClick={() => navigate("/")}
               className="bg-gradient-loopi hover:shadow-loopi"
             >
-              Volver al trabajo
+              {t("oasis.back.to.work")}
             </Button>
             <Button
               size="lg"
               variant="outline"
               onClick={() => {
-                if (confirm("¿Seguro que quieres cerrar tu sesión?")) {
-                  alert("¡Descansa bien! Nos vemos mañana 😊");
+                if (confirm(t("oasis.close.confirm"))) {
+                  alert(t("oasis.goodbye"));
                 }
               }}
               className="border-accent/50 hover:bg-accent/10"
             >
-              Cerrar sesión
+              {t("oasis.close.session")}
             </Button>
           </div>
         </div>
