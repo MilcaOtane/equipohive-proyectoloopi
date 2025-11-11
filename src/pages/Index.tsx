@@ -4,23 +4,16 @@ import { Card } from "@/components/ui/card";
 import { Brain, Target, Trophy, Sparkles, MessageCircle } from "lucide-react";
 import loopiAvatar from "@/assets/loopi-avatar.png";
 import { LoopiChat } from "@/components/LoopiChat";
-
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/10">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-accent/10">
       {/* Hero Section */}
       <section className="container mx-auto px-4 pt-20 pb-16">
         <div className="flex flex-col items-center text-center space-y-8">
           {/* Loopi Avatar */}
           <div className="relative">
             <div className="absolute inset-0 bg-gradient-loopi rounded-full blur-3xl opacity-30 animate-pulse" />
-            <img 
-              src={loopiAvatar} 
-              alt="Loopi Avatar" 
-              className="relative w-48 h-48 object-contain drop-shadow-2xl animate-fade-in"
-            />
+            <img src={loopiAvatar} alt="Loopi Avatar" className="relative w-48 h-48 object-contain drop-shadow-2xl animate-fade-in" />
           </div>
 
           {/* Hero Text */}
@@ -39,21 +32,11 @@ const Index = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
-            <Button 
-              size="lg" 
-              onClick={() => setShowChat(true)}
-              className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8"
-            >
+            <Button size="lg" onClick={() => setShowChat(true)} className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-8">
               <MessageCircle className="mr-2 h-5 w-5" />
               Habla con Loopi
             </Button>
-            <Button 
-              size="lg" 
-              variant="outline" 
-              className="border-primary/50 hover:bg-primary/5 text-lg px-8"
-            >
-              Ver cómo funciona
-            </Button>
+            
           </div>
         </div>
       </section>
@@ -66,10 +49,7 @@ const Index = () => {
         
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Feature 1 */}
-          <Card 
-            className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer"
-            onClick={() => setShowChat(true)}
-          >
+          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer" onClick={() => setShowChat(true)}>
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-loopi flex items-center justify-center">
                 <Brain className="h-6 w-6 text-white" />
@@ -82,10 +62,7 @@ const Index = () => {
           </Card>
 
           {/* Feature 2 */}
-          <Card 
-            className="p-6 hover:shadow-loopi transition-all duration-300 border-secondary/20 bg-gradient-to-br from-card to-secondary/5 cursor-pointer"
-            onClick={() => window.location.href = "/focus-monitor"}
-          >
+          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-secondary/20 bg-gradient-to-br from-card to-secondary/5 cursor-pointer" onClick={() => window.location.href = "/focus-monitor"}>
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-secondary to-primary flex items-center justify-center">
                 <Target className="h-6 w-6 text-white" />
@@ -98,10 +75,7 @@ const Index = () => {
           </Card>
 
           {/* Feature 3 */}
-          <Card 
-            className="p-6 hover:shadow-loopi transition-all duration-300 border-accent/20 bg-gradient-to-br from-card to-accent/5 cursor-pointer"
-            onClick={() => window.location.href = "/challenges"}
-          >
+          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-accent/20 bg-gradient-to-br from-card to-accent/5 cursor-pointer" onClick={() => window.location.href = "/challenges"}>
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-to-r from-accent to-primary flex items-center justify-center">
                 <Trophy className="h-6 w-6 text-white" />
@@ -114,10 +88,7 @@ const Index = () => {
           </Card>
 
           {/* Feature 4 */}
-          <Card 
-            className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer"
-            onClick={() => window.location.href = "/oasis-calm"}
-          >
+          <Card className="p-6 hover:shadow-loopi transition-all duration-300 border-primary/20 bg-gradient-to-br from-card to-primary/5 cursor-pointer" onClick={() => window.location.href = "/oasis-calm"}>
             <div className="space-y-4">
               <div className="w-12 h-12 rounded-full bg-gradient-calm flex items-center justify-center">
                 <Sparkles className="h-6 w-6 text-white" />
@@ -183,10 +154,7 @@ const Index = () => {
           <p className="text-lg text-muted-foreground">
             Únete a miles de usuarios que ya están mejorando su productividad y bienestar con Loopi
           </p>
-          <Button 
-            size="lg" 
-            className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-12"
-          >
+          <Button size="lg" className="bg-gradient-loopi hover:shadow-loopi transition-all duration-300 text-lg px-12">
             <Sparkles className="mr-2 h-5 w-5" />
             Descarga Loopi gratis
           </Button>
@@ -197,20 +165,12 @@ const Index = () => {
       </section>
 
       {/* Floating Chat Button */}
-      {!showChat && (
-        <Button
-          onClick={() => setShowChat(true)}
-          size="lg"
-          className="fixed bottom-8 right-8 rounded-full w-16 h-16 bg-gradient-loopi hover:shadow-loopi transition-all duration-300 z-50"
-        >
+      {!showChat && <Button onClick={() => setShowChat(true)} size="lg" className="fixed bottom-8 right-8 rounded-full w-16 h-16 bg-gradient-loopi hover:shadow-loopi transition-all duration-300 z-50">
           <MessageCircle className="h-6 w-6" />
-        </Button>
-      )}
+        </Button>}
 
       {/* Chat Interface */}
       {showChat && <LoopiChat onClose={() => setShowChat(false)} />}
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
